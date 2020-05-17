@@ -12,21 +12,16 @@ def numinput(prompt):
             return ''
 
 
-def Converter():
-    dictionary ={
-    0:['metres','m'], 1:['feet','ft'], 2:['celcius','C'], 
-    3:['farenheit','F'], 4:['kilograms','kg'], 5:['pounds','Ib']
-}
-    list1 = ['A','B','C','D','E','F']
+def converter():
+    global dictionary1
     conversion = input('Specify the conversion you want: ')
     conversion = conversion.upper()
     if conversion == 'QUIT': 
         print('Thank you for using the converted. See you again.')
-    elif conversion == 'A' or conversion == 'B' or conversion =='C' or conversion =='D' or conversion =='E' or conversion=='F':
-        index = list1.index(conversion)
-        value = numinput(f'Enter a value in {dictionary[index][0]}: ')
+    elif conversion in dictionary1:
+        value = numinput(f'Enter a value in {dictionary1[conversion][0]}: ')
         if value == '':
-            return Converter()
+            return converter()
         else: 
             if conversion == 'A': 
                 new_value = value*3.281
@@ -40,14 +35,17 @@ def Converter():
                 new_value = value*2.205
             elif conversion == 'F': 
                 new_value = value/2.205
-            if index%2 == 0: 
-                print(f'{value} {dictionary[index][1]} = {new_value:.2f} {dictionary[index+1][1]}')
-            else: 
-                print(f'{value} {dictionary[index][1]} = {new_value:.2f} {dictionary[index-1][1]}')
-            return Converter()
+            print(f'{value} {dictionary1[conversion][1]} = {new_value:.2f} {dictionary1[conversion][2]}')
+            return converter()
     else: 
         print('Invalid selection. Please specify a conversion between A-F.')
-        return Converter()
+        return converter()
 
 
-Converter()
+dictionary1 = {
+    'A':['metres','m','ft'],'B':['feet','ft','m'],'C':['celcius','C','F'], 'D':['farenheit','F','C'],
+    'E':['kilograms','kg','Ibs'],'F':['pounds', 'Ibs','kg']
+}
+print('A: Metres to Feet \nB: Feet to Metres \nC: Celcius to Fahrenheit\nD: Farenheit to Celcius \nE: Kilograms to Pounds \nF: Pounds to Kilograms')
+converter()
+
